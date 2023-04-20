@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,18 @@ Route::get('/data_management', [AuthenticationController::class, 'data_manage'])
 Route::get('/exports', [AuthenticationController::class, 'exports'])->name('auth.exports');
 Route::get('/processes', [AuthenticationController::class, 'process'])->name('auth.process');
 Route::get('/vehicles', [AuthenticationController::class, 'vehicles'])->name('auth.vehicles');
+
+
+
+
+Route::post('/addClient', [AuthenticationController::class, 'addClient'])->name('auth.addClient');
+Route::get('/client/edit/{id}', [AuthenticationController::class, 'editClient'])->name('auth.client.edit');
+Route::post('/client/update/{id}', [AuthenticationController::class, 'updateClient'])->name('auth.client.update');
+Route::get('/client/delete/{id}', [AuthenticationController::class, 'deleteClient'])->name('auth.delete.update');
+
+
+
+
 
 });
 
