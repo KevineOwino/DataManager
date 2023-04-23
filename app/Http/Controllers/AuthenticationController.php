@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Requests\CreateClientRequest;
+use App\Http\Requests\ClientUpdateRequest;
 use Validator,Redirect,Response;
 use Illuminate\Support\Facades\Session;
-
 use App\Models\User;
+use App\Models\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -65,7 +66,9 @@ class AuthenticationController extends Controller
 
     public function clients() {
 
-        return view('auth.clients');
+        $clients = Client::all();
+
+        return view('auth.clients', compact('clients'));
     }
 
 
@@ -115,6 +118,7 @@ if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->
 
 }
 
+              ///Register a new user///
 
 public function userRegister(Request $request) {
 
@@ -139,6 +143,86 @@ Auth::login($user);
 }
 
 
+
+            ///Adding a Client to the Database///
+
+
+public function addClient(CreateClientRequest $request )  {
+
+    Client::create([
+        'name' => $request->input('name'),
+        'host_country_id' => $request->input('host_country_id'),
+        'staff_code' => $request->input('staff_code'),
+         'organization' => $request->input('organization'),
+         'r_number' => $request->input('r_number'),
+          'index_number' => $request->input('index_number'),
+          'email' => $request->input('email'),
+         
+          
+   ]);
+
+
+   return redirect()->route('auth.clients')->withSuccess('Client has been added successfully');
+}
+
+
+public function editClient($id) {
+
+    $clients = Client::find($id);
+
+    return view('auth.editClient', compact('clients'));
+
+
+}
+
+
+
+public function updateClient(ClientUpdateRequest $request, $id)  
+{
+
+
+  try {
+            $validator = Validator::make($request->validated(), [
+                'name'=> 'required',
+                'host_country_id' => 'required',
+                'staff_code' => 'required',
+                'organization' => 'required',
+                'r_number' => 'required',
+                'index_number' => 'required', 
+                'email'=> 'required'
+            ]);
+         
+            if ($validator->fails()) {
+                $message = $validator->errors()->first();
+                return back()->withErrors($message);
+            }
+            $data = $request->validated();
+            $client = Client::find($id);
+
+            if($client->update($data)){
+
+            return redirect()->route('auth.clients')->withSuccess('Client updated Successfully');
+            }
+
+
+
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
+
+
+        }
+
+
+        public function deleteClient($id){
+            Client::destroy($id);
+            return redirect()->route('auth.clients')->withSuccess('Client deleted Successfully');
+         }
+ 
+
+
+
+
  
 
     public function logout() {
@@ -148,8 +232,8 @@ Auth::login($user);
     }
 
 
-}
 
+}
 
 
 
