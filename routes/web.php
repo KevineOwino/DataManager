@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,19 @@ Route::get('/client/edit/{id}', [AuthenticationController::class, 'editClient'])
 Route::post('/client/update/{id}', [AuthenticationController::class, 'updateClient'])->name('auth.client.update');
 Route::get('/client/delete/{id}', [AuthenticationController::class, 'deleteClient'])->name('auth.delete.update');
 
+
+
+Route::get('/manage_prefix', [DashboardController::class, 'managePrefix'])->name('auth.manage_prefix');
+Route::get('/plates_list', [DashboardController::class, 'platesList'])->name('auth.plates_list');
+Route::get('/returned_number_plates', [DashboardController::class, 'returnedPlates'])->name('auth.returned_number_plates');
+Route::get('/tims_registration_list', [DashboardController::class, 'timsRegList'])->name('auth.tims_registration_list');
+Route::get('/new_tims_registration', [DashboardController::class, 'newTimsReg'])->name('auth.new_tims_registration');
+Route::get('/vehicles_database', [DashboardController::class, 'vehicleDb'])->name('auth.vehicles_database');
+
+
+Route::get('/vat_suppliers', [DashboardController::class, 'vatSuppliers'])->name('auth.vat_suppliers');
+Route::get('/clearing_agents', [DashboardController::class, 'clearAgent'])->name('auth.clearing_agents');
+Route::get('/vehicle_models', [DashboardController::class, 'vehicleModel'])->name('auth.vehicle_models');
 
 
 
