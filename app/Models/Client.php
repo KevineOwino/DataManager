@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
-<<<<<<< HEAD
-=======
 
     protected $table ='clients';
 
@@ -30,5 +28,4 @@ class Client extends Model
 
 
 
->>>>>>> 2f7cf586b284cb166c9c8b2d0b97b535819814cc
 }
